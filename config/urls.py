@@ -16,10 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from rest_framework_simplejwt.views import ( TokenObtainPairView, TokenRefreshView, TokenVerifyView )
+from account.views import RegisterAPIView, AuthView
+
+from rest_framework_simplejwt.views import ( TokenObtainPairView, TokenRefreshView, TokenVerifyView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    path("auth/", AuthView.as_view()), #로그인
+    path("register/", RegisterAPIView.as_view()), #회원가입하기
+
     path('api-jwt-auth/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api-jwt-auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api-jwt-auth/verify/', TokenVerifyView.as_view(), name='token_verify'),
