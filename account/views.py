@@ -7,6 +7,16 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .serializers import UserSerializer
 
+
+
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+
+import pdb
+
+
+
+
 class RegisterAPIView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -35,6 +45,17 @@ class RegisterAPIView(APIView):
 
 
 class AuthView(APIView):
+
+    # permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        return Response({ "test": "test" })
+
+    def put(self, request):
+        aaa = "test2"
+        return Response({ "test22": request.user.id })
 
     def post(self, request):
         user = authenticate(
